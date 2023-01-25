@@ -1,0 +1,9 @@
+*.app
+**/*.g.xlf
+**/rad.json
+permissionsAnalyzer.json
+**/.alcache
+**/.altemplates
+**/.altestrunner
+**/.*/
+null
