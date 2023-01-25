@@ -1,6 +1,6 @@
 codeunit 50100 "ItemLoanItemType" implements LoanItemTypeInterface
 {
-    procedure MyProcedure();
+    procedure Post(var LoanLine: Record "Loan Line");
     begin
 
     end;

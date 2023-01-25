@@ -1,4 +1,4 @@
 interface "LoanItemTypeInterface"
 {
-    procedure MyProcedure();
+    procedure Post(var LoanLine: Record "Loan Line");
 }

@@ -42,7 +42,9 @@ table 50102 "Loan Line"
         field(8; "Quantity Loaned"; Decimal)
         {
             Caption = 'Quantity Loaned';
-            editable = false;
+            FieldClass = FlowField;
+            Editable = false;
+            CalcFormula = Sum("Loan Entry"."Outstanding Quantity" WHERE("Loan No." = FIELD("Loan No."), "Loan Line No." = FIELD("Line No.")));
         }
         field(9; "Quantity Returned"; Decimal)
         {

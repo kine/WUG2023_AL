@@ -16,6 +16,7 @@ codeunit 50102 "Post Loan Line Meth"
         if IsHandled then
             exit;
         CreateLoanEntry(LoanLine);
+        CallPostItem(LoanLine);
         SetPostedQuantity(LoanLine);
         SetLoanLineState(LoanLine);
         LoanLine.Modify(true);
@@ -23,7 +24,8 @@ codeunit 50102 "Post Loan Line Meth"
 
     local procedure SetPostedQuantity(var LoanLine: Record "Loan Line")
     begin
-        LoanLine.Validate("Quantity Loaned", LoanLine."Quantity");
+        //LoanLine.Validate("Quantity Loaned", LoanLine."Quantity");
+        //Now it is FlowField
     end;
 
     local procedure SetLoanLineState(var LoanLine: Record "Loan Line")
@@ -37,6 +39,7 @@ codeunit 50102 "Post Loan Line Meth"
         LoanHeader: Record "Loan Header";
     begin
         LoanHeader.Get(LoanLine."Loan No.");
+        LoanLine.CALCFIELDS("Quantity Loaned");
         LoanEntry.Init();
         LoanEntry.Validate("Entry No.", 0);
         LoanEntry.Validate("Loan No.", LoanLine."Loan No.");
@@ -46,10 +49,18 @@ codeunit 50102 "Post Loan Line Meth"
         LoanEntry.Validate("Contact No.", LoanHeader."Contact No.");
         LoanEntry.Validate("Item Type", LoanLine."Item Type");
         LoanEntry.Validate("Item No.", LoanLine."Item No.");
-        LoanEntry.Validate(Open, true);
         LoanEntry.Validate(Quantity, LoanLine."Quantity" - LoanLine."Quantity Loaned");
         LoanEntry.Validate("Outstanding Quantity", LoanEntry.Quantity);
+        LoanEntry.Validate(Open, LoanEntry."Outstanding Quantity" <> 0);
         LoanEntry.Insert(True);
+    end;
+
+    local procedure CallPostItem(var LoanLine: Record "Loan Line")
+    var
+        LoanItemTypeInterface: Interface LoanItemTypeInterface;
+    begin
+        LoanItemTypeInterface := LoanLine."Item Type";
+        LoanItemTypeInterface.Post(LoanLine);
     end;
 
     [IntegrationEvent(false, false)]
