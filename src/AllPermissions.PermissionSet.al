@@ -3,5 +3,7 @@ permissionset 50100 "AllPermissions"
     Assignable = true;
     Permissions =
         tabledata "Loan Header" = RIMD,
-        table "Loan Header" = X;
+        tabledata "Loan Setup" = RIMD,
+        table "Loan Header" = X,
+        table "Loan Setup" = X;
 }

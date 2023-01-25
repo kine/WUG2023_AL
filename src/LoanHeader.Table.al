@@ -9,7 +9,16 @@ table 50100 "Loan Header"
         field(1; "No."; Code[20])
         {
             Caption = 'No.';
-
+            trigger OnValidate()
+            var
+                NoSeriesMgt: Codeunit NoSeriesManagement;
+            begin
+                if "No." <> xRec."No." then begin
+                    GetLoanSetup();
+                    NoSeriesMgt.TestManual(LoanSetup."Loan Nos.");
+                    "No. Series" := '';
+                end;
+            end;
         }
         field(2; "Contact No."; Code[20])
         {
@@ -36,6 +45,12 @@ table 50100 "Loan Header"
         {
             Caption = 'Status';
         }
+        field(5; "No. Series"; Code[20])
+        {
+            Caption = 'No. Series';
+            TableRelation = "No. Series";
+            Editable = false;
+        }
     }
 
     keys
@@ -52,13 +67,30 @@ table 50100 "Loan Header"
 
     fieldgroups
     {
-        fieldgroup("Brick"; "No.", "Contact No.")
+        fieldgroup(Brick; "No.", "Contact No.")
         {
         }
-        fieldgroup("DropDown"; "No.", "Contact No.")
+        fieldgroup(DropDown; "No.", "Contact No.")
         {
         }
     }
     var
+        LoanSetup: Record "Loan Setup";
         InvalidContactErr: Label 'Contact with no.=%1 not found!', Comment = '%1 - Contact No.';
+
+    trigger OnInsert()
+    var
+        NoSeriesMgt: Codeunit NoSeriesManagement;
+    begin
+        if "No." = '' then begin
+            GetLoanSetup();
+            LoanSetup.TestField("Loan Nos.");
+            NoSeriesMgt.InitSeries(LoanSetup."Loan Nos.", xRec."No. Series", 0D, "No.", "No. Series");
+        end;
+    end;
+
+    local procedure GetLoanSetup()
+    begin
+        LoanSetup.Get();
+    end;
 }
