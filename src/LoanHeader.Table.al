@@ -51,6 +51,13 @@ table 50100 "Loan Header"
             TableRelation = "No. Series";
             Editable = false;
         }
+        field(6; "Open Entry Exists"; Boolean)
+        {
+            Caption = 'Open Entry Exists';
+            Editable = false;
+            FieldClass = FlowField;
+            CalcFormula = Exist("Loan Entry" WHERE("Loan No." = FIELD("No."), Open = CONST(true)));
+        }
     }
 
     keys
@@ -91,6 +98,8 @@ table 50100 "Loan Header"
 
     trigger OnDelete()
     begin
+        CalcFields("Open Entry Exists");
+        TestField("Open Entry Exists", false);
         RemoveLoanLines();
     end;
 
