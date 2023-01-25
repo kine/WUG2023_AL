@@ -1,6 +1,8 @@
 table 50100 "Loan Header"
 {
     DataClassification = CustomerContent;
+    LookupPageId = "Loans";
+    DrillDownPageId = "Loans";
 
     fields
     {
