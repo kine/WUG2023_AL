@@ -57,4 +57,11 @@ table 50102 "Loan Line"
             Clustered = true;
         }
     }
+
+    internal procedure PostLoanLine()
+    var
+        PostLoanLineMeth: Codeunit "Post Loan Line Meth";
+    begin
+        PostLoanLineMeth.PostLoanLine(Rec);
+    end;
 }

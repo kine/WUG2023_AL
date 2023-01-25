@@ -10,4 +10,8 @@ enum 50100 "LoanStatus"
     {
         Caption = 'Closed';
     }
+    value(2; Loaned)
+    {
+        Caption = 'Loaned';
+    }
 }

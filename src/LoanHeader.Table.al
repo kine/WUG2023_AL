@@ -89,6 +89,18 @@ table 50100 "Loan Header"
         end;
     end;
 
+    internal procedure Post()
+    var
+        PostLoan: codeunit "Post Loan Meth";
+    begin
+        PostLoan.PostLoan(Rec, false);
+    end;
+
+    internal procedure PostReturn()
+    begin
+        Error('Procedure PostReturn not implemented.');
+    end;
+
     local procedure GetLoanSetup()
     begin
         LoanSetup.Get();

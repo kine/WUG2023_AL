@@ -38,4 +38,42 @@ page 50101 "Loan"
             }
         }
     }
+    actions
+    {
+        area(processing)
+        {
+            group("Actions")
+            {
+                Caption = 'Actions';
+                action("Post Loan")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Post Loan';
+                    Image = Post;
+                    ToolTip = 'Loan the selected item.';
+                    Promoted = true;
+                    PromotedCategory = Process;
+
+                    trigger OnAction()
+                    begin
+                        Rec.Post();
+                    end;
+                }
+                action(Return)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Post Return';
+                    Image = Return;
+                    ToolTip = 'Return the selected item.';
+                    Promoted = true;
+                    PromotedCategory = Process;
+
+                    trigger OnAction()
+                    begin
+                        Rec.PostReturn();
+                    end;
+                }
+            }
+        }
+    }
 }
