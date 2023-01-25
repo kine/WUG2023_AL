@@ -74,7 +74,7 @@ table 50100 "Loan Header"
 
     fieldgroups
     {
-        fieldgroup(Brick; "No.", "Contact No.")
+        fieldgroup(Brick; "No.", "Contact No.", "Contact Name")
         {
         }
         fieldgroup(DropDown; "No.", "Contact No.")
