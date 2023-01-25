@@ -28,6 +28,14 @@ page 50101 "Loan"
                     ToolTip = 'Specifies the value of the Status field.';
                 }
             }
+            part(Lines; "Loan Lines Subpage")
+            {
+                ApplicationArea = All;
+                Caption = 'Loan Lines';
+                Editable = true;
+                SubPageLink = "Loan No." = FIELD("No.");
+                UpdatePropagation = Both;
+            }
         }
     }
 }

@@ -1,0 +1,4 @@
+interface "LoanItemTypeInterface"
+{
+    procedure MyProcedure();
+}
