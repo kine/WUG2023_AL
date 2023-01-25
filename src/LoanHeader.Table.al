@@ -89,6 +89,11 @@ table 50100 "Loan Header"
         end;
     end;
 
+    trigger OnDelete()
+    begin
+        RemoveLoanLines();
+    end;
+
     internal procedure Post()
     var
         PostLoan: codeunit "Post Loan Meth";
@@ -104,5 +109,14 @@ table 50100 "Loan Header"
     local procedure GetLoanSetup()
     begin
         LoanSetup.Get();
+    end;
+
+    local procedure RemoveLoanLines()
+    var
+        LoanLine: Record "Loan Line";
+    begin
+        LoanLine.Reset();
+        LoanLine.SetRange("Loan No.", "No.");
+        LoanLine.DeleteAll();
     end;
 }
